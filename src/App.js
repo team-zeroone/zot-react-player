@@ -1,30 +1,18 @@
 import React from 'react';
-import plyr from 'plyr';
-import 'plyr/dist/plyr.css';
 import classes from './App.module.scss';
+import ZotPlayer, { PLATFORMS } from './ZotPlayer/ZotPlayer';
 
 const App = () => {
-  const [player, setPlayer] = React.useState(null);
-
-  React.useEffect(() => {
-    const playerInstance = new plyr('#player');
-    setPlayer(playerInstance);
-
-    return () => {
-      playerInstance.destroy();
-    };
-  }, []);
-
+  // bTqVqk7FSmY --> youtube
+  // 309741585 --> vimeo
   return (
     <div className={classes.ParentContainer}>
-      <div className={classes.VideoContainer}>
-        <div id="player">
-          <iframe
-            title="bTqVqk7FSmY"
-            src="https://www.youtube-nocookie.com/embed/bTqVqk7FSmY"
-          ></iframe>
-        </div>
-      </div>
+      <ZotPlayer
+        platform={PLATFORMS.VIMEO}
+        sourceId="309741585"
+        width="700px"
+        height="350px"
+      />
     </div>
   );
 };
