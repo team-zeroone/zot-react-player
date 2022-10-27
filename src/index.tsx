@@ -1,18 +1,24 @@
 import React from 'react';
-import plyr from 'plyr';
+import Plyr from 'plyr';
 import 'plyr/dist/plyr.css';
-import PropTypes from 'prop-types';
 
-export const PLATFORMS = {
-  YOUTUBE: 'YOUTUBE',
-  VIMEO: 'VIMEO',
-};
+export enum PLATFORMS {
+  YOUTUBE = 'YOUTUBE',
+  VIMEO = 'VIMEO',
+}
 
-const ZotPlayer = (props) => {
-  const [player, setPlayer] = React.useState(null);
+interface Props {
+  platform: string;
+  sourceId: string;
+  width?: string;
+  height?: string;
+}
+
+const ZotPlayer: React.FC<Props> = (props) => {
+  const [player, setPlayer]: any = React.useState(null);
 
   React.useEffect(() => {
-    const playerInstance = new plyr(`#player`);
+    const playerInstance = new Plyr(`#player`);
     setPlayer(playerInstance);
 
     return () => {
@@ -20,12 +26,15 @@ const ZotPlayer = (props) => {
     };
   }, []);
 
-  const source =
-    props.platform === PLATFORMS.VIMEO
+  const getSource = (platform: string) => {
+    return platform === PLATFORMS.VIMEO
       ? `https://player.vimeo.com/video/${props.sourceId}`
       : props.platform === PLATFORMS.YOUTUBE
       ? `https://www.youtube-nocookie.com/embed/${props.sourceId}`
       : '';
+  };
+
+  const source = getSource(props.platform);
 
   return (
     <div
@@ -39,13 +48,6 @@ const ZotPlayer = (props) => {
       </div>
     </div>
   );
-};
-
-ZotPlayer.propTypes = {
-  platform: PropTypes.string.isRequired,
-  sourceId: PropTypes.string.isRequired,
-  width: PropTypes.string,
-  height: PropTypes.string,
 };
 
 export default ZotPlayer;
