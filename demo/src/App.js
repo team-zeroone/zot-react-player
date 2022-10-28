@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './App.module.scss';
-import ZotPlayer, { PLATFORMS } from './ZotPlayer/ZotPlayer';
+import ZotPlayer, { PLATFORMS } from 'zot-player';
 
 const App = () => {
   // bTqVqk7FSmY --> youtube
